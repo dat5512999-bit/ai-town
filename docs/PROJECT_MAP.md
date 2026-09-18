@@ -18,6 +18,8 @@
 | 世界初始化 | `convex/init.ts` | 建立地圖、角色與預設世界 |
 | 世界模擬 | `convex/aiTown/`、`convex/engine/` | agent 行為、路徑與 simulation engine |
 | 前端 | `src/` | React、Pixi 地圖與聊天介面 |
+| 全鎮對話旁觀介面 | `src/components/TownConversationFeed.tsx` | 即時顯示最近 50 則訊息 |
+| 全鎮對話資料查詢 | `convex/messages.ts` | 以 `worldId` 索引讀取最近訊息與參與者 |
 
 ## 系統架構
 

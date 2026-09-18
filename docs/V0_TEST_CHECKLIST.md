@@ -36,6 +36,8 @@
 - [x] NPC position/path 隨時間更新，確認自主移動
 - [x] NPC 自主建立對話；實測 Stella/Bob、Alice/Lucky 等多輪對話
 - [x] 前端可點擊 NPC，右側角色/聊天面板由 Convex 訊息 subscription 顯示
+- [x] 未選取居民時，右側全鎮對話可即時顯示最近 50 則訊息並標示進行中的聊天
+- [x] 全鎮對話訊息可點擊並開啟目前仍在世界中的相關居民
 - [x] 對話結束後保存 8 筆 `memories` 與 8 筆 `memoryEmbeddings`
 - [x] 重啟前後端後，1 個世界、40 則訊息、8 筆記憶與 8 筆 embedding 全數仍存在
 - [x] Browser console、Convex log、server log 無未解重大 error
