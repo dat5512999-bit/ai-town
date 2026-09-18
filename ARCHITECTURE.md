@@ -1,5 +1,9 @@
 # Architecture
 
+## Localized dialogue quality pipeline
+
+The customized V0.2 conversation path is `conversation prompt -> Ollama -> dialogue quality check -> optional rewrite -> deterministic Traditional Chinese normalization -> message storage`. Current character descriptions are authoritative; recalled memories containing known legacy-profile contamination or unresolved English are excluded before prompt construction. Conversation summaries pass through the same quality layer before embedding and long-term memory storage.
+
 This documents dives into the high-level architecture of AI Town and its different layers. We'll
 first start with a brief overview and then go in-depth on each component. The overview should
 be sufficient for forking AI Town and changing game or agent behavior. Read on to the deep dives

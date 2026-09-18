@@ -41,6 +41,10 @@
 - [x] 對話結束後保存 8 筆 `memories` 與 8 筆 `memoryEmbeddings`
 - [x] 重啟前後端後，1 個世界、40 則訊息、8 筆記憶與 8 筆 embedding 全數仍存在
 - [x] Browser console、Convex log、server log 無未解重大 error
+- [x] 對話輸出可偵測並處理英文、常見簡體字、說話者標籤與表情符號
+- [x] 含舊宗教／太空背景或大量英文的污染記憶不再注入新對話
+- [x] 對話 prompt 包含時段、所在區域與當下活動線索
+- [x] 實際 Convex Log 確認含英文的模型輸出會觸發繁中改寫後再寫入聊天
 
 成功標準已達成，可建立 `V0.0-original-ai-town-working` tag。
 

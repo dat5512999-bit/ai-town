@@ -14,6 +14,7 @@
 | 記憶流程 | `convex/agent/memory.ts` | 摘要、重要度、向量搜尋、反思 |
 | 記憶 schema | `convex/agent/schema.ts` | `memories`、`memoryEmbeddings` |
 | 對話生成 | `convex/agent/conversation.ts` | prompt、歷史與記憶注入 |
+| 對話品質管線 | `convex/agent/dialogueQuality.ts` | 繁中檢查、用語正規化、污染記憶隔離與必要重寫 |
 | AI 模型/provider | `convex/util/llm.ts` | Ollama/OpenAI/Replicate 與預設模型 |
 | 世界初始化 | `convex/init.ts` | 建立地圖、角色與預設世界 |
 | 世界模擬 | `convex/aiTown/`、`convex/engine/` | agent 行為、路徑與 simulation engine |
@@ -37,7 +38,7 @@ flowchart LR
   D --> R[memories / memoryEmbeddings]
 ```
 
-前端不直接呼叫模型。Convex action 組合對話上下文並呼叫 Ollama；simulation engine 保存世界狀態；對話結束後建立摘要與 embedding，寫入記憶表供後續向量檢索。
+前端不直接呼叫模型。Convex action 組合人物、場景、對話歷史與經過篩選的記憶，再呼叫 Ollama；輸出通過臺灣繁中品質管線後才寫入訊息。simulation engine 保存世界狀態；對話結束後，摘要同樣通過品質管線，再建立 embedding 並寫入記憶表供後續向量檢索。
 
 ## API 與模組邊界
 

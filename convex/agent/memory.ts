@@ -7,6 +7,7 @@ import { asyncMap } from '../util/asyncMap';
 import { GameId, agentId, conversationId, playerId } from '../aiTown/ids';
 import { SerializedPlayer } from '../aiTown/player';
 import { memoryFields } from './schema';
+import { polishTaiwaneseDialogue } from './dialogueQuality';
 
 // How long to wait before updating a memory's last access time.
 export const MEMORY_ACCESS_THROTTLE = 300_000; // In ms
@@ -62,9 +63,10 @@ export async function rememberConversation(
     messages: llmMessages,
     max_tokens: 500,
   });
+  const localizedSummary = await polishTaiwaneseDialogue(content);
   const description = `與${otherPlayer.name}在${new Date(
     data.conversation._creationTime,
-  ).toLocaleString('zh-TW')}的對話：${content}`;
+  ).toLocaleString('zh-TW')}的對話：${localizedSummary}`;
   const importance = await calculateImportance(description);
   const { embedding } = await fetchEmbedding(description);
   authors.delete(player.id as GameId<'players'>);

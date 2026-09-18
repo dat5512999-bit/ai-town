@@ -1,6 +1,6 @@
 {
   "name": "ai-town",
-  "version": "0.0.6",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "npm-run-all --parallel dev:backend dev:frontend",

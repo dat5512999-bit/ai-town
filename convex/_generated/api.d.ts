@@ -9,6 +9,7 @@
  */
 
 import type * as agent_conversation from "../agent/conversation.js";
+import type * as agent_dialogueQuality from "../agent/dialogueQuality.js";
 import type * as agent_embeddingsCache from "../agent/embeddingsCache.js";
 import type * as agent_memory from "../agent/memory.js";
 import type * as aiTown_agent from "../aiTown/agent.js";
@@ -60,6 +61,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   "agent/conversation": typeof agent_conversation;
+  "agent/dialogueQuality": typeof agent_dialogueQuality;
   "agent/embeddingsCache": typeof agent_embeddingsCache;
   "agent/memory": typeof agent_memory;
   "aiTown/agent": typeof aiTown_agent;
