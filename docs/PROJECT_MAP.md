@@ -7,8 +7,9 @@
 | NPC 資料、人格、對話目標 | `data/characters.ts` | V0 不修改 |
 | NPC Sprite metadata | `data/spritesheets/*.ts` | Pixi spritesheet 定義 |
 | NPC Sprite 圖片 | `public/assets/spritesheets/` | 原始角色圖片資產 |
-| 地圖資料 | `data/gentle.js` | tile、碰撞與動畫配置，由 `convex/init.ts` 載入 |
-| 地圖 tileset | `public/assets/tilesets/` | 地圖圖片資產 |
+| 現行都市地圖資料 | `data/taiwanCity.ts` | 48×32 格、背景與碰撞規則，由 `convex/init.ts` 載入 |
+| 現行都市地圖美術 | `public/assets/taiwan-city-map-v1.png` | 1536×1024 像素背景圖磚集 |
+| 原版森林地圖 | `data/gentle.js`、`public/assets/gentle-obj.png` | 保留供還原與比較 |
 | 地圖轉換工具 | `data/convertMap.js` | 將 Tiled JSON 轉成專案格式 |
 | 記憶流程 | `convex/agent/memory.ts` | 摘要、重要度、向量搜尋、反思 |
 | 記憶 schema | `convex/agent/schema.ts` | `memories`、`memoryEmbeddings` |

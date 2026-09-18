@@ -17,6 +17,7 @@ import { chatCompletion } from './util/llm';
 import { startConversationMessage } from './agent/conversation';
 import { GameId } from './aiTown/ids';
 import { Descriptions } from '../data/characters';
+import * as taiwanCityMap from '../data/taiwanCity';
 
 // Clear all of the tables except for the embeddings cache.
 const excludedTables: Array<TableNames> = ['embeddingsCache'];
@@ -82,6 +83,49 @@ export const migrateTaiwaneseCharacters = internalMutation({
       updated += 1;
     }
     return { updated };
+  },
+});
+
+export const migrateTaiwanCityMap = internalMutation({
+  handler: async (ctx) => {
+    const { worldStatus } = await getDefaultWorld(ctx.db);
+    const map = await ctx.db
+      .query('maps')
+      .withIndex('worldId', (q) => q.eq('worldId', worldStatus.worldId))
+      .unique();
+    if (!map) throw new Error(`Map for world ${worldStatus.worldId} not found`);
+
+    await ctx.db.patch(map._id, {
+      width: taiwanCityMap.mapwidth,
+      height: taiwanCityMap.mapheight,
+      tileSetUrl: taiwanCityMap.tilesetpath,
+      tileSetDimX: taiwanCityMap.tilesetpxw,
+      tileSetDimY: taiwanCityMap.tilesetpxh,
+      tileDim: taiwanCityMap.tiledim,
+      bgTiles: taiwanCityMap.bgtiles,
+      objectTiles: taiwanCityMap.objmap,
+      animatedSprites: taiwanCityMap.animatedsprites,
+    });
+
+    const world = await ctx.db.get(worldStatus.worldId);
+    if (!world) throw new Error(`World ${worldStatus.worldId} not found`);
+    const spawnPoints = [
+      { x: 8, y: 6 },
+      { x: 16, y: 6 },
+      { x: 24, y: 6 },
+      { x: 32, y: 6 },
+      { x: 40, y: 6 },
+      { x: 23, y: 20 },
+    ];
+    await ctx.db.patch(world._id, {
+      players: world.players.map((player, index) => ({
+        ...player,
+        position: spawnPoints[index % spawnPoints.length],
+        pathfinding: undefined,
+        speed: 0,
+      })),
+    });
+    return { width: taiwanCityMap.mapwidth, height: taiwanCityMap.mapheight };
   },
 });
 

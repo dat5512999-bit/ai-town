@@ -7,6 +7,8 @@
 
 繁體中文版的玩法請見 [`docs/PLAY_GUIDE_ZH_TW.md`](docs/PLAY_GUIDE_ZH_TW.md)。
 
+目前本分支使用台灣都市公寓與街區地圖；地圖資料位於 `data/taiwanCity.ts`，美術位於 `public/assets/taiwan-city-map-v1.png`。原版 `gentle` 森林地圖仍完整保留。
+
 [Live Demo](https://www.convex.dev/ai-town)
 
 [Join our community Discord: AI Stack Devs](https://discord.gg/PQUmTBTGmT)
