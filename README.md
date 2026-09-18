@@ -5,6 +5,8 @@
 > [`docs/PROJECT_MAP.md`](docs/PROJECT_MAP.md)；驗證結果請見
 > [`docs/V0_TEST_CHECKLIST.md`](docs/V0_TEST_CHECKLIST.md)。V0 保持官方遊戲內容不變。
 
+繁體中文版的玩法請見 [`docs/PLAY_GUIDE_ZH_TW.md`](docs/PLAY_GUIDE_ZH_TW.md)。
+
 [Live Demo](https://www.convex.dev/ai-town)
 
 [Join our community Discord: AI Stack Devs](https://discord.gg/PQUmTBTGmT)

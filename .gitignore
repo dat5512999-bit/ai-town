@@ -46,3 +46,4 @@ convex_local*
 # Local V0 tooling and runtime artifacts
 /.tools/
 /.logs/
+/backups/

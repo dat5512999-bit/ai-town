@@ -26,10 +26,10 @@ export default function FreezeButton() {
       <Button
         onClick={flipSwitch}
         className="hidden lg:block"
-        title="When freezing a world, the agents will take some time to stop what they are doing before they become frozen. "
+        title="暫停世界後，居民需要一點時間才會停止目前的行動。"
         imgUrl="/assets/star.svg"
       >
-        {frozen ? 'Unfreeze' : 'Freeze'}
+        {frozen ? '繼續世界' : '暫停世界'}
       </Button>
     </>
   );

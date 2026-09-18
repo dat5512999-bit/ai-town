@@ -1,4 +1,4 @@
-import { relatedMemoriesMessages } from './conversation';
+import { containsLatinText, LANGUAGE_INSTRUCTION, relatedMemoriesMessages } from './conversation';
 
 describe('relatedMemoriesMessages', () => {
   test('keeps recalled memory out of the privileged system role', () => {
@@ -23,5 +23,17 @@ describe('relatedMemoriesMessages', () => {
 
   test('omits the data message when no memories were recalled', () => {
     expect(relatedMemoriesMessages([])).toEqual([]);
+  });
+});
+
+describe('Traditional Chinese localization', () => {
+  test('instructs every generated conversation to use Traditional Chinese', () => {
+    expect(LANGUAGE_INSTRUCTION).toContain('臺灣繁體中文');
+    expect(LANGUAGE_INSTRUCTION).toContain('不要使用英文或簡體中文');
+  });
+
+  test('detects Latin text that needs automatic localization', () => {
+    expect(containsLatinText('這句話混入 fascinating 英文')).toBe(true);
+    expect(containsLatinText('這是一句完整的繁體中文。')).toBe(false);
   });
 });

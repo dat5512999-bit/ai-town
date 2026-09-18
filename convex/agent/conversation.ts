@@ -9,6 +9,8 @@ import { GameId, conversationId, playerId } from '../aiTown/ids';
 import { NUM_MEMORIES_TO_SEARCH } from '../constants';
 
 const selfInternal = internal.agent.conversation;
+export const LANGUAGE_INSTRUCTION =
+  '所有對話內容都必須使用自然、易懂的臺灣繁體中文。不要使用英文或簡體中文；角色名稱保持資料中提供的中文名稱。';
 
 export async function startConversationMessage(
   ctx: ActionCtx,
@@ -43,6 +45,7 @@ export async function startConversationMessage(
   );
   const prompt = [
     `You are ${player.name}, and you just started a conversation with ${otherPlayer.name}.`,
+    LANGUAGE_INSTRUCTION,
   ];
   prompt.push(...agentPrompts(otherPlayer, agent, otherAgent ?? null));
   prompt.push(...previousConversationPrompt(otherPlayer, lastConversation));
@@ -67,7 +70,7 @@ export async function startConversationMessage(
     max_tokens: 300,
     stop: stopWords(otherPlayer.name, player.name),
   });
-  return trimContentPrefx(content, lastPrompt);
+  return trimContentPrefx(await ensureTraditionalChinese(content), lastPrompt);
 }
 
 function trimContentPrefx(content: string, prompt: string) {
@@ -103,6 +106,7 @@ export async function continueConversationMessage(
   const prompt = [
     `You are ${player.name}, and you're currently in a conversation with ${otherPlayer.name}.`,
     `The conversation started at ${started.toLocaleString()}. It's now ${now.toLocaleString()}.`,
+    LANGUAGE_INSTRUCTION,
   ];
   prompt.push(...agentPrompts(otherPlayer, agent, otherAgent ?? null));
   prompt.push(...untrustedMemoryInstructions(memories));
@@ -133,7 +137,7 @@ export async function continueConversationMessage(
     max_tokens: 300,
     stop: stopWords(otherPlayer.name, player.name),
   });
-  return trimContentPrefx(content, lastPrompt);
+  return trimContentPrefx(await ensureTraditionalChinese(content), lastPrompt);
 }
 
 export async function leaveConversationMessage(
@@ -155,6 +159,7 @@ export async function leaveConversationMessage(
   const prompt = [
     `You are ${player.name}, and you're currently in a conversation with ${otherPlayer.name}.`,
     `You've decided to leave the question and would like to politely tell them you're leaving the conversation.`,
+    LANGUAGE_INSTRUCTION,
   ];
   prompt.push(...agentPrompts(otherPlayer, agent, otherAgent ?? null));
   prompt.push(
@@ -182,7 +187,30 @@ export async function leaveConversationMessage(
     max_tokens: 300,
     stop: stopWords(otherPlayer.name, player.name),
   });
-  return trimContentPrefx(content, lastPrompt);
+  return trimContentPrefx(await ensureTraditionalChinese(content), lastPrompt);
+}
+
+export function containsLatinText(content: string): boolean {
+  return /[A-Za-z]/.test(content);
+}
+
+async function ensureTraditionalChinese(content: string): Promise<string> {
+  if (!containsLatinText(content)) {
+    return content;
+  }
+  const { content: localized } = await chatCompletion({
+    messages: [
+      {
+        role: 'system',
+        content:
+          '你是臺灣繁體中文編輯。將輸入完整改寫為自然的臺灣繁體中文，移除所有英文與簡體字。保留原意、語氣與角色個性，只輸出改寫後的對話，不要解釋。',
+      },
+      { role: 'user', content },
+    ],
+    temperature: 0.1,
+    max_tokens: 300,
+  });
+  return localized.trim();
 }
 
 function agentPrompts(

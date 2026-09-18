@@ -44,7 +44,7 @@ export async function rememberConversation(
       role: 'user',
       content: `You are ${player.name}, and you just finished a conversation with ${otherPlayer.name}. I would
       like you to summarize the conversation from ${player.name}'s perspective, using first-person pronouns like
-      "I," and add if you liked or disliked this interaction.`,
+      "I," and add if you liked or disliked this interaction. 請只使用臺灣繁體中文撰寫摘要。`,
     },
   ];
   const authors = new Set<GameId<'players'>>();
@@ -57,14 +57,14 @@ export async function rememberConversation(
       content: `${author.name} to ${recipient.name}: ${message.text}`,
     });
   }
-  llmMessages.push({ role: 'user', content: 'Summary:' });
+  llmMessages.push({ role: 'user', content: '繁體中文摘要：' });
   const { content } = await chatCompletion({
     messages: llmMessages,
     max_tokens: 500,
   });
-  const description = `Conversation with ${otherPlayer.name} at ${new Date(
+  const description = `與${otherPlayer.name}在${new Date(
     data.conversation._creationTime,
-  ).toLocaleString()}: ${content}`;
+  ).toLocaleString('zh-TW')}的對話：${content}`;
   const importance = await calculateImportance(description);
   const { embedding } = await fetchEmbedding(description);
   authors.delete(player.id as GameId<'players'>);
@@ -347,7 +347,12 @@ async function reflectOnMemories(
   }
   console.debug('sum of importance score = ', sumOfImportanceScore);
   console.debug('Reflecting...');
-  const prompt = ['[no prose]', '[Output only JSON]', `You are ${name}, statements about you:`];
+  const prompt = [
+    '[no prose]',
+    '[Output only JSON]',
+    `You are ${name}, statements about you:`,
+    '所有 insight 內容必須使用臺灣繁體中文。',
+  ];
   memories.forEach((m, idx) => {
     prompt.push(`Statement ${idx}: ${m.description}`);
   });

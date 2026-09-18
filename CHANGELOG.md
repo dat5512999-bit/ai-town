@@ -1,5 +1,14 @@
 # Changelog
 
+## V0.0.1-zh-TW - 2026-09-18
+
+- 將遊戲標題、按鈕、說明、狀態、聊天介面與網頁 metadata 完整在地化為臺灣繁體中文。
+- 在不改變角色設定本意的前提下，翻譯五位原版 NPC 的名稱、人格與目標。
+- 強制 NPC 使用繁體中文對話，並在模型混入英文時自動進行繁中改寫。
+- 將活動狀態與玩家名稱中文化。
+- 新增繁體中文遊戲操作手冊與 localization 測試。
+- 重建乾淨的中文世界；原英文 V0 世界已備份於本機 `backups/V0-original-english-before-zh-TW/`。
+
 ## V0.0-original-ai-town-working - 2026-09-18
 
 - 建立並驗證使用者 Fork，不直接修改官方 repository。
