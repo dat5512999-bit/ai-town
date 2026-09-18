@@ -1,5 +1,10 @@
 # AI Town 🏠💻💌
 
+> 此 Fork 的 Windows V0 技術驗證、啟停、FAQ 與備份說明請見
+> [`docs/V0_WINDOWS_GUIDE.md`](docs/V0_WINDOWS_GUIDE.md)；程式位置與系統架構請見
+> [`docs/PROJECT_MAP.md`](docs/PROJECT_MAP.md)；驗證結果請見
+> [`docs/V0_TEST_CHECKLIST.md`](docs/V0_TEST_CHECKLIST.md)。V0 保持官方遊戲內容不變。
+
 [Live Demo](https://www.convex.dev/ai-town)
 
 [Join our community Discord: AI Stack Devs](https://discord.gg/PQUmTBTGmT)
