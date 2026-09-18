@@ -10,7 +10,7 @@ import { NUM_MEMORIES_TO_SEARCH } from '../constants';
 
 const selfInternal = internal.agent.conversation;
 export const LANGUAGE_INSTRUCTION =
-  '所有對話內容都必須使用自然、易懂的臺灣繁體中文。不要使用英文或簡體中文；角色名稱保持資料中提供的中文名稱。';
+  '所有對話都必須使用自然的臺灣繁體中文。請像台灣人平常聊天：句子短一點、口氣放鬆、直接回應對方。可以適量使用「欸」、「啊」、「吧」、「還好」、「有點」等日常說法，但不要刻意塞滿語助詞。不要用翻譯腔、成語堆疊、過度禮貌的客套話、「噢」或中國網路用語。不要使用英文或簡體中文；角色名稱保持資料中提供的名稱。';
 
 export async function startConversationMessage(
   ctx: ActionCtx,
@@ -203,7 +203,7 @@ async function ensureTraditionalChinese(content: string): Promise<string> {
       {
         role: 'system',
         content:
-          '你是臺灣繁體中文編輯。將輸入完整改寫為自然的臺灣繁體中文，移除所有英文與簡體字。保留原意、語氣與角色個性，只輸出改寫後的對話，不要解釋。',
+          '你是台灣口語編輯。將輸入改寫成自然、簡短的臺灣繁體中文，像台灣人平常說話，不要翻譯腔。移除英文、簡體字和中國網路用語。保留原意與角色個性，只輸出改寫後的對話，不要解釋。',
       },
       { role: 'user', content },
     ],

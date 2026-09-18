@@ -16,6 +16,7 @@ import { fetchEmbedding } from './util/llm';
 import { chatCompletion } from './util/llm';
 import { startConversationMessage } from './agent/conversation';
 import { GameId } from './aiTown/ids';
+import { Descriptions } from '../data/characters';
 
 // Clear all of the tables except for the embeddings cache.
 const excludedTables: Array<TableNames> = ['embeddingsCache'];
@@ -28,6 +29,59 @@ export const wipeAllTables = internalMutation({
       }
       await ctx.scheduler.runAfter(0, internal.testing.deletePage, { tableName, cursor: null });
     }
+  },
+});
+
+// Preserve the running world and its memories while refreshing authored NPC profiles.
+export const migrateTaiwaneseCharacters = internalMutation({
+  handler: async (ctx) => {
+    const { worldStatus } = await getDefaultWorld(ctx.db);
+    const world = await ctx.db.get(worldStatus.worldId);
+    if (!world) {
+      throw new Error(`World ${worldStatus.worldId} not found`);
+    }
+
+    const playerDescriptions = await ctx.db
+      .query('playerDescriptions')
+      .withIndex('worldId', (q) => q.eq('worldId', worldStatus.worldId))
+      .collect();
+    let updated = 0;
+    for (const playerDescription of playerDescriptions) {
+      const agent = world.agents.find(({ playerId }) => playerId === playerDescription.playerId);
+      if (!agent) {
+        const player = world.players.find(({ id }) => id === playerDescription.playerId);
+        if (player?.human) {
+          await ctx.db.patch(playerDescription._id, {
+            name: '我',
+            description: '我是人類玩家',
+          });
+        }
+        continue;
+      }
+      const authored = Descriptions.find(
+        ({ character }) => character === playerDescription.character,
+      );
+      if (!authored) continue;
+
+      await ctx.db.patch(playerDescription._id, {
+        name: authored.name,
+        description: authored.identity,
+      });
+      const agentDescription = await ctx.db
+        .query('agentDescriptions')
+        .withIndex('worldId', (q) =>
+          q.eq('worldId', worldStatus.worldId).eq('agentId', agent.id),
+        )
+        .unique();
+      if (agentDescription) {
+        await ctx.db.patch(agentDescription._id, {
+          identity: authored.identity,
+          plan: authored.plan,
+        });
+      }
+      updated += 1;
+    }
+    return { updated };
   },
 });
 

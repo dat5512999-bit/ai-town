@@ -29,7 +29,8 @@ export const Player = ({
   onClick: SelectElement;
   historicalTime?: number;
 }) => {
-  const playerCharacter = game.playerDescriptions.get(player.id)?.character;
+  const playerDescription = game.playerDescriptions.get(player.id);
+  const playerCharacter = playerDescription?.character;
   if (!playerCharacter) {
     throw new Error(`Player ${player.id} has no character`);
   }
@@ -78,6 +79,7 @@ export const Player = ({
             ? player.activity?.emoji
             : undefined
         }
+        name={playerDescription.name}
         isViewer={isViewer}
         textureUrl={character.textureUrl}
         spritesheetData={character.spritesheetData}

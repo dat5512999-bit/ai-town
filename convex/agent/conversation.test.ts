@@ -30,6 +30,8 @@ describe('Traditional Chinese localization', () => {
   test('instructs every generated conversation to use Traditional Chinese', () => {
     expect(LANGUAGE_INSTRUCTION).toContain('臺灣繁體中文');
     expect(LANGUAGE_INSTRUCTION).toContain('不要使用英文或簡體中文');
+    expect(LANGUAGE_INSTRUCTION).toContain('不要用翻譯腔');
+    expect(LANGUAGE_INSTRUCTION).toContain('台灣人平常聊天');
   });
 
   test('detects Latin text that needs automatic localization', () => {

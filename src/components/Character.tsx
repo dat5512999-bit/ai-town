@@ -13,6 +13,7 @@ export const Character = ({
   isThinking = false,
   isSpeaking = false,
   emoji = '',
+  name,
   isViewer = false,
   speed = 0.1,
   onClick,
@@ -31,6 +32,8 @@ export const Character = ({
   // Shows a speech bubble if true.
   isSpeaking?: boolean;
   emoji?: string;
+  // Always-visible label used to find residents while spectating.
+  name: string;
   // Highlights the player.
   isViewer?: boolean;
   // The speed of the animation. Can be tuned depending on the side and speed of the NPC.
@@ -100,6 +103,24 @@ export const Character = ({
         textures={spriteSheet.animations[direction]}
         animationSpeed={speed}
         anchor={{ x: 0.5, y: 0.5 }}
+      />
+      <Text
+        x={0}
+        y={18}
+        text={name}
+        anchor={{ x: 0.5, y: 0 }}
+        resolution={2}
+        style={
+          new PIXI.TextStyle({
+            align: 'center',
+            fill: isViewer ? '#fff36b' : '#ffffff',
+            fontFamily: 'sans-serif',
+            fontSize: 10,
+            fontWeight: 'bold',
+            stroke: '#321f16',
+            strokeThickness: 3,
+          })
+        }
       />
       {emoji && (
         <Text x={0} y={-24} scale={{ x: -0.8, y: 0.8 }} text={emoji} anchor={{ x: 0.5, y: 0.5 }} />
