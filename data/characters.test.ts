@@ -20,4 +20,14 @@ describe('Traditional Chinese character data', () => {
     expect(xiaojia?.identity).toContain('女生');
     expect(xiaojia?.identity).toContain('憂鬱症不是她的全部');
   });
+
+  test('彼得是喜歡電動並想認真交女朋友的開朗乖乖男', () => {
+    const peter = Descriptions.find(({ name }) => name === '彼得');
+
+    expect(peter?.identity).toContain('個性開朗');
+    expect(peter?.identity).toContain('打電動');
+    expect(peter?.identity).toContain('女朋友');
+    expect(peter?.identity).toContain('尊重女生的界線');
+    expect(peter?.plan).toContain('先當朋友');
+  });
 });
