@@ -30,4 +30,14 @@ describe('Traditional Chinese character data', () => {
     expect(peter?.identity).toContain('尊重女生的界線');
     expect(peter?.plan).toContain('先當朋友');
   });
+
+  test('樂奇是為職涯發展煩惱並喜歡看電影的金牛座上班族', () => {
+    const leqi = Descriptions.find(({ name }) => name === '樂奇');
+
+    expect(leqi?.identity).toContain('金牛座');
+    expect(leqi?.identity).toContain('上班');
+    expect(leqi?.identity).toContain('沒有看到好的發展');
+    expect(leqi?.identity).toContain('電影院看電影');
+    expect(leqi?.plan).toContain('接下來可以怎麼做');
+  });
 });
